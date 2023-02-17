@@ -1,0 +1,104 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+class healing_potion 
+{
+public:
+    int honeycombs, dandelions, coal, toadstools;
+
+    healing_potion(int honeycombs, int dandelions, int coal, int toadstools)
+    {
+        this->honeycombs = honeycombs;
+        this->dandelions = dandelions;
+        this->coal = coal;
+        this->toadstools = toadstools;
+    }
+};
+
+class mana_potion 
+{
+public:
+    int honeycombs, dandelions, coal, toadstools;
+
+    mana_potion(int honeycombs, int dandelions, int coal, int toadstools)
+    {
+        this->honeycombs = honeycombs;
+        this->dandelions = dandelions;
+        this->coal = coal;
+        this->toadstools = toadstools;
+    }
+};
+
+int main()
+{
+    int potion, honeycombs, dandelions, coal, toadstools, sum;
+
+    bool validInput = false;
+    
+    while (!validInput) // loop until valid input is entered
+    {
+        // ask the user and get their input
+        // \n creates new line//
+        cout << "Select a potion crafting priority:\n1. Minor Mana\n2. Minor Healing\n";
+        cin >> potion;
+
+        if (potion < 1 || potion > 2) 
+        {   
+            cout << "Invalid input." << endl;
+        }    
+        else
+        {
+            validInput = true;
+            cout << "How many Honeycombs do you have?" << endl;
+            cin >> honeycombs;
+
+            if (honeycombs >= 0)
+            {
+                cout << "How many Dandelions do you have?" << endl;
+                cin >> dandelions;
+
+                if (dandelions >= 0)
+                {
+                    cout << "How many Coal do you have?" << endl;
+                    cin >> coal;
+
+                    if (coal >= 0)
+                    {
+                        cout << "How many Toadstools do you have?" << endl;
+                        cin >> toadstools;
+
+                        if (toadstools >= 0)
+                        {
+                            // input is valid, let's craft the potion
+                            if (potion == 1)
+                            {
+                                if (honeycombs >= 5 && dandelions >= 3 && coal >= 1)
+                                {
+                                   healing_potion potion(honeycombs, dandelions, coal, toadstools); 
+                                   int num_potions = (honeycombs / 5) + (dandelions / 3) + (coal / 1); 
+                                   cout << "You can make " << num_potions << " Healing potion(s)" <<endl;
+                                
+                            }
+                            else if (potion == 2)
+                            {
+                                if (honeycombs >= 5 && coal >= 2 && toadstools >= 3)
+                                {
+                                   mana_potion potion(honeycombs, dandelions, coal, toadstools); 
+                                   int num_potions = (honeycombs / 5) + (toadstools / 3) + (coal / 1); 
+                                   cout << "You can make " << num_potions << " Mana_potion(s)" <<endl;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            cout << "Invalid input." << endl;
+                        }
+                    }
+                }
+            }
+        }
+    }
+return 0;
+}
