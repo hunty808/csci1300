@@ -1,0 +1,26 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int height;
+
+    // Prompt user for input and validate it
+    cout << "Enter the height: " << endl;
+    if (!(cin >> height) || height < 1) {
+        cout << "Invalid input." << endl;
+        return 0;
+    }
+
+    // Print the alphabetical triangle
+    char current_char = 'a';
+    for (int i = 1; i <= height; i++) {
+        for (int j = 1; j <= i; j++) {
+            cout << current_char;
+            current_char++;
+        }
+        cout << endl;
+        current_char += i + 1;
+    }
+
+    return 0;
+}
