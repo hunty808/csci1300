@@ -1,0 +1,62 @@
+#include <iostream>
+#include <cmath>
+#include <iomanip>
+
+using namespace std;
+
+double tuneSimilarity(string tune1, string tune2) // set to double to get a more accurate score for similarity
+{
+    // Check if the input tunes have equal length
+    if (tune1.length() == tune2.length())  // check if the the two tunes are the same length 
+    {
+        int matching_notes = 0; // start the matching notes value at 0
+        int matching_pitches = 0; // start the matching pitches value at 0
+        int not_matching_pitches = 0; // set not matches pitches value at 0
+        int total_notes = tune1.length() / 2; // sets number of notes to be half the string of tune 1 so the program checks 2 characters at a time
+        for(int i = 0; i <= tune1.length() - 1; i += 2) // loop to check each note part till "i" is greater than tune_1 length than end loop
+        {
+            if (tune1.substr(i, 1) == tune2.substr(i, 1)) // the if statement compares the first character of the tunes staring "i" and if they are equal than matching notes increases by 1
+            {
+                matching_notes ++;
+                if (tune1.substr(i, 2) == tune2.substr(i, 2)) // the nested if statement checks whether the first two characters of the note "i" in tune_1 is equal to tune_2 
+            {
+                matching_pitches ++; // increases matching pitches by 1 each time
+            }
+            } else if (tune1[i+1] != tune2[i+1]) // checks to see if the two characters don't match at "i"
+            {
+                not_matching_pitches ++; // increases for each note that doesn't match in the pitches
+            }
+        }
+
+    double similarity_score = (static_cast<double>(matching_notes) / total_notes) + (matching_pitches - not_matching_pitches); // static_cast<double> allows for us to find the percentage of the first part similarity but keep it from being an integer, first part calculates the perctange of matching notes by dividing the amount of matching notes by the total amount of notes and second part calculates the amount of matching pitches subtracted by the amount not matching
+    return similarity_score;
+    } else 
+    {
+        return 0;
+    }    
+}
+
+double bestSimilarity(string input_tune, string target_tune)
+{
+    if(input_tune.length() < target_tune.length())
+    {
+        return 0;
+    }
+    double bestScore = -1000;
+    for(int i = 0; i <= input_tune.length() - target_tune.length(); i += 2)
+    {
+        string subsequence = input_tune.substr(i, target_tune.length());
+        double score = tuneSimilarity(subsequence, target_tune);
+        double bestScore =static_cast<double>(bestScore - score);
+    }
+    return bestScore;
+}
+
+int main() 
+{
+    string input_tune =  "A0E2D4E5C1F0" ;
+    string target_tune = "D4E5C0" ;
+    double best_score = bestSimilarity(input_tune, target_tune);
+    cout << "Best similarity score: " << fixed << setprecision(5) << best_score << endl;
+    return 0;
+}
